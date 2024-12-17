@@ -3,7 +3,6 @@ package com.example.calculator_history.reco
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +20,10 @@ class MainAdapter(private var items: List<MainList>,private val onItemClick: (Ma
 
     fun updateList(newList: List<MainList>) {
         items = newList // Update to a new List
+        notifyDataSetChanged() // Notify adapter about data change
+    }
+    fun clearList(){
+        items = emptyList() // Clear to Empty List
         notifyDataSetChanged() // Notify adapter about data change
     }
 

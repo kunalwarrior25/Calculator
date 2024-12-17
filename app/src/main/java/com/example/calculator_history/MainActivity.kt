@@ -307,4 +307,8 @@ class MainActivity : AppCompatActivity() {
         handler.removeCallbacks(updateTimeRunnable)
     }
 
+    fun clear(view: View) {
+        adapter.clearList()
+    }
+
 }
