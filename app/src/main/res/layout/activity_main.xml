@@ -261,6 +261,7 @@
         android:layout_height="507dp"
         android:background="@color/white"
         android:id="@+id/history_l6"
+        android:visibility="gone"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"

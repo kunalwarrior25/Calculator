@@ -28,25 +28,25 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var database:MainDatabase
+    private lateinit var database: MainDatabase
     private lateinit var adapter: MainAdapter
 
     var operator = true // Used to track if the last input was an operator
     var deci = true // Used to track if a decimal point has been added
     var value = "" // The current expression value
     var result = "" // The evaluated result
-    var i = 1
+    private var i:Int = 1
 
     lateinit var setvalue: TextView
     lateinit var setresult: TextView
-    lateinit var reco_history:RecyclerView
-    lateinit var history_l6:LinearLayout
+    lateinit var reco_history: RecyclerView
+    lateinit var history_l6: LinearLayout
 
-
-    lateinit var currentDate:String
+    lateinit var currentDate: String
     private lateinit var dateFormat: SimpleDateFormat
     private lateinit var updateTimeRunnable: Runnable
     private lateinit var handler: Handler
@@ -179,6 +179,9 @@ class MainActivity : AppCompatActivity() {
                 // If dates match, use the stored counter value
                 i = storedCounter?.toInt() ?: 1
             }
+            if (currentDate != storedDate) {
+                i = 1
+            }
 
             // Insert data into the database
             lifecycleScope.launch {
@@ -199,7 +202,9 @@ class MainActivity : AppCompatActivity() {
 
             // If the date has changed, reset the counter and save the new date
             if (currentDate != storedDate) {
-                savetemporarydata(currentDate)   // Save the new date
+                savetemporarydata(currentDate) // Save the new date
+                sharedPreferences.edit().putString("no", "2").apply()
+
             } else {
                 // Increment the counter
                 i++
@@ -308,7 +313,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clear(view: View) {
-        adapter.clearList()
+        lifecycleScope.launch {
+            database.contactDao().clearAllData()
+        }
     }
 
 }

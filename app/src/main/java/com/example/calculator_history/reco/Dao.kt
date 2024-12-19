@@ -19,6 +19,9 @@ interface ContactDao {
     @Delete
     suspend fun deleteData(mainList: MainList)
 
+    @Query("DELETE FROM mainlist")
+    suspend fun clearAllData()
+
     @Query("SELECT * FROM mainlist")
     fun getContact(): Flow<List<MainList>> // Get data as a Flow for real-time updates
 }
